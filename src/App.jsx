@@ -66,8 +66,8 @@ function App() {
         const y = Math.floor(Math.random() * BoardSize);
         const isVertical = Math.random() < 0.5; // Randomly choose orientation
 
-        if (canPlaceShip(board, x, y, shipType.length, isVertical)) {
-          placeShip(board, x, y, shipType.length, isVertical);
+        if (canPlaceShip(board, x, y, shipType, isVertical)) {
+          placeShip(board, x, y, shipType, isVertical);
           break;
         }
       }
@@ -104,6 +104,23 @@ function App() {
     }
   };
 
+  const handleCellClick = (index) => {
+    if (computerBoard[index]) {
+      // It's a hit
+      computerBoard[index] = 'hit';
+      setMessage('You hit a ship! 🎉');
+    } else {
+      // It's a miss
+      computerBoard[index] = 'miss';
+      setMessage('You missed! 😬');
+    }
+
+    setComputerBoard([...computerBoard]);
+    if (computerBoard.every(cell => cell !== 1)) {
+      setMessage('You win! All enemy ships are sunk 🤩');
+    }
+  };
+
   useEffect(() => {
     placePlayerShips();
 
@@ -127,9 +144,12 @@ function App() {
           board={computerBoard}
           boardSize={BoardSize}
           getCellState={getCellState}
+          handleCellClick={handleCellClick}
         />
       </div>
-      <div className="message">{message}</div>
+      <div className="toast-message">
+        {message && <div className="toast">{message}</div>}
+      </div>
     </div>
   )
 }
