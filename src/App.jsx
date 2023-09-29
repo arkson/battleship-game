@@ -58,8 +58,59 @@ function App() {
     return '';
   };
 
+  const placeShipsRandomly = (board) => {
+    const shipOptions = [5, 4, 3, 3, 2];
+    shipOptions.forEach((shipType) => {
+      while (true) {
+        const x = Math.floor(Math.random() * BoardSize);
+        const y = Math.floor(Math.random() * BoardSize);
+        const isVertical = Math.random() < 0.5; // Randomly choose orientation
+
+        if (canPlaceShip(board, x, y, shipType.length, isVertical)) {
+          placeShip(board, x, y, shipType.length, isVertical);
+          break;
+        }
+      }
+    });
+  };
+
+// Function to check if a computer ship can be placed without overlapping
+  const canPlaceShip = (board, x, y, shipLength, isVertical) => {
+    if (isVertical) {
+      if (x + shipLength > BoardSize) {
+        return false;
+      }
+    } else {
+      if (y + shipLength > BoardSize) {
+        return false;
+      }
+    }
+
+    for (let i = 0; i < shipLength; i++) {
+      const index = isVertical ? (x + i) * BoardSize + y : x * BoardSize + (y + i);
+      if (board[index]) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+// Function to place a computer ship on the board
+  const placeShip = (board, x, y, shipLength, isVertical) => {
+    for (let i = 0; i < shipLength; i++) {
+      const index = isVertical ? (x + i) * BoardSize + y : x * BoardSize + (y + i);
+      board[index] = 1;
+    }
+  };
+
   useEffect(() => {
     placePlayerShips();
+
+    // Place computer ships on the computer's board
+    const newComputerBoard = [...computerBoard];
+    placeShipsRandomly(newComputerBoard);
+    setComputerBoard(newComputerBoard);
   }, []);
 
   return (
