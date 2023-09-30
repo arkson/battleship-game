@@ -1,7 +1,7 @@
 #root {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 0 1rem;
     text-align: center;
 }
 
@@ -13,6 +13,8 @@
 
 .game-container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .board {
@@ -73,11 +75,49 @@ button {
     display: inline-block;
 }
 
+.letters-row {
+    display: flex;
+    gap: 2px;
+}
+
+.letters-row p {
+    width: 30px;
+}
+
+.player-numbers-column, .computer-numbers-column {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    gap: 2px;
+    align-self: flex-start;
+}
+.player-numbers-column {
+    top: 250px;
+}
+
+.computer-numbers-column {
+    bottom: -140px;
+}
+
+.player-numbers-column p {
+    height: 30px;
+    margin: 0;
+}
+
+.computer-numbers-column p {
+    height: 30px;
+    margin: 0;
+}
+
 @media (max-width: 800px) {
-    .game-container {
-        flex-direction: column;
-    }
     .separator {
         height: 2rem;
+    }
+    .player-numbers-column {
+        top: 305px;
+    }
+
+    .computer-numbers-column {
+        bottom: -255px;
     }
 }

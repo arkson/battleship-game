@@ -46,18 +46,6 @@ function App() {
     });
   };
 
-  const getCellState = (board, x, y) => {
-    const index = x * BoardSize + y;
-    if (board[index] === 1) {
-      return 'ship';
-    } else if (board[index] === -1) {
-      return 'miss';
-    } else if (board[index] === 2) {
-      return 'hit';
-    }
-    return '';
-  };
-
   const placeShipsRandomly = (board) => {
     const shipOptions = [5, 4, 3, 3, 2];
     shipOptions.forEach((shipType) => {
@@ -116,9 +104,22 @@ function App() {
     }
 
     setComputerBoard([...computerBoard]);
+
     if (computerBoard.every(cell => cell !== 1)) {
       setMessage('You win! All enemy ships are sunk 🤩');
     }
+  };
+
+  const getCellState = (board, x, y) => {
+    const index = x * BoardSize + y;
+    if (board[index] === 1) {
+      return 'ship';
+    } else if (computerBoard[index] === 'hit') {
+      return 'hit';
+    } else if (computerBoard[index] === 'miss') {
+      return 'miss';
+    }
+    return '';
   };
 
   useEffect(() => {

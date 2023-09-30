@@ -6,4 +6,6 @@ To run it locally:
 
 Use `npm run dev`
 
-Try it out [here](https://65174df7ac5f2a367eeb4664--reliable-hamster-e5f28a.netlify.app/) 
+Try it out [here](https://reliable-hamster-e5f28a.netlify.app/) 
+
+![img_1.png](img_1.png)
